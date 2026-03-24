@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
+#include "ID.h"
 
 // Noms des tubes (FIFOs)
 #define C_TO_R "fifo_client_to_router"
