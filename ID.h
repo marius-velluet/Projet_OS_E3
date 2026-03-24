@@ -11,10 +11,6 @@
 // Noms des tubes (FIFOs)
 #define C_TO_R "fifo_client_to_router"
 #define R_TO_C "fifo_router_to_client"
-#define R_TO_S "fifo_router_to_server"
-#define S_TO_R "fifo_server_to_router"
-
-
 
 void run_client() {
     char input[BUFFER_SIZE];
