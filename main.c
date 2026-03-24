@@ -79,11 +79,20 @@ void run_server() {
     fprintf(stderr, "[DataServer] Traitement du code : %s\n", buffer);
     
     // Simulation de recherche de menu
-    if(buffer[ == 1234){
+    char id_str[5]; // 4 chiffres + '\0'
+    
+    // Copier les 4 caractères à partir de buffer+4
+    strncpy(id_str, buffer + 4, 4);
+    id_str[4] = '\0';
+
+    // Conversion en entier
+    int id_menu = atoi(id_str);
+    
+    if(id_menu == 1234){
     	snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Tofu Royal, Nouilles aux poulets, Nems, Riz cantonais", 4, buffer + 4);
-    }else if(*(buffer + 4) == 5678){
+    }else if(id_menu == 5678){
     	snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Tasty Crousty", 4, buffer + 4);
-    }else if(*(buffer + 4) == 9123){ 
+    }else if(id_menu == 9123){ 
     	snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Sandwich au poulet, Sandwich au thon, Sandwich au jambon, Sandwich végétarien", 4, buffer + 4);
     }else{ 
     	snprintf(result, BUFFER_SIZE, "Menu introuvable pour le lieu %.*s", 4, buffer + 4);
