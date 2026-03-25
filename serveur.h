@@ -23,7 +23,7 @@ void run_server() {
 
     fprintf(stderr, "[DataServer] Traitement du code : %s\n", buffer);
     
-    // Simulation de recherche de menu
+    // Simulation de recherche de ville
     char id_str[5]; // 4 chiffres + '\0'
     
     // Copier les 4 caractères à partir de buffer+4

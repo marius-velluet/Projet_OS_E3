@@ -25,6 +25,12 @@ void run_router() {
     read(fd_c_in, buffer, BUFFER_SIZE);
     close(fd_c_in);
     fprintf(stderr, "[Routeur] Routage du message : %s\n", buffer);
+    printf(".");
+    usleep(2000000);
+    printf(".");
+    usleep(2000000);
+    printf(".\n");
+    usleep(2000000);
 
     // Étape B : Envoyer au serveur de données
     int fd_s_out = open(R_TO_S, O_WRONLY);
