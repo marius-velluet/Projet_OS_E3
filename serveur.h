@@ -34,7 +34,8 @@ void run_server() {
     int id_menu = atoi(id_str);
     
     if(id_menu == 1234){
-    	snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Tofu Royal, Nouilles aux poulets, Nems, Riz cantonais", 4, buffer + 4);
+    	system("feh images/menu1.jpeg &");
+    	//snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Tofu Royal, Nouilles aux poulets, Nems, Riz cantonais", 4, buffer + 4);
     }else if(id_menu == 5678){
     	snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Tasty Crousty", 4, buffer + 4);
     }else if(id_menu == 9123){ 
