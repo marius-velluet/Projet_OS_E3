@@ -24,23 +24,66 @@ void run_server() {
     fprintf(stderr, "[DataServer] Traitement du code : %s\n", buffer);
     
     // Simulation de recherche de ville
-    char id_str[5]; // 4 chiffres + '\0'
+    
+     char id_str1[5]; // 4 chiffres + '\0'
     
     // Copier les 4 caractères à partir de buffer+4
-    strncpy(id_str, buffer + 4, 4);
-    id_str[4] = '\0';
+    strncpy(id_str1, buffer + 4, 4);
+    id_str1[4] = '\0';
 
     // Conversion en entier
-    int id_menu = atoi(id_str);
+    int id_ville = atoi(id_str1);
+    //===================================
+    char id_str2[5]; // 4 chiffres + '\0'
     
+    // Copier les 4 caractères à partir de buffer+4
+    strncpy(id_str2, buffer + 8, 4);
+    id_str2[4] = '\0';
+
+    // Conversion en entier
+    int id_menu = atoi(id_str2);
+    
+    //Fonction pour éviter la duplication de code
+    void bienvenue(char const* restaurant, char const * ville){
+    printf("Bienvenue au restaurant %s à %s\n", restaurant, ville);
+    
+    }
+    //=========================================
+    if(id_ville == 0001){
+    	if(id_menu == 1234){
+    		system("feh images/menu1.jpeg &");
+    		bienvenue("Burger Roi", "Noisy");
+    	}
+   	 if(id_menu == 5678){
+    		system("feh images/menu4.jpeg &");
+    		bienvenue("Bahn mi", "Noisy");
+    		}
+    }
+    else if(id_ville == 0002){
     if(id_menu == 1234){
-    	system("feh images/menu1.jpeg &");
-    	//snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Tofu Royal, Nouilles aux poulets, Nems, Riz cantonais", 4, buffer + 4);
-    }else if(id_menu == 5678){
-    	snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Tasty Crousty", 4, buffer + 4);
-    }else if(id_menu == 9123){ 
-    	snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Sandwich au poulet, Sandwich au thon, Sandwich au jambon, Sandwich végétarien", 4, buffer + 4);
-    }else{ 
+    	//snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Tasty Crousty", 4, buffer + 4);
+    	system("feh images/menu2.jpeg &");
+    	bienvenue("Tasty Crousty", "Bussy");
+    	}
+    if(id_menu == 5678){
+    	system("feh images/menu5.jpeg &");
+    	bienvenue("Restaurant volonté Thaï", "Bussy");
+    	}
+    
+    }
+    
+    else if(id_ville == 0003){
+    if(id_menu == 5678){ 
+    	//snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Sandwich au poulet, Sandwich au thon, Sandwich au jambon, Sandwich végétarien", 4, buffer + 4);
+    	system("feh images/menu3.jpeg &");
+    	bienvenue("Shushii", "Créteil");
+    	}
+    	if(id_menu == 9123){
+    	system("feh images/menu6.jpeg &");
+    	bienvenue("Coré1", "Créteil");
+    	}
+    }
+    else{ 
     	snprintf(result, BUFFER_SIZE, "Menu introuvable pour le lieu %.*s", 4, buffer + 4);
    }
     	
