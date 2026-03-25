@@ -8,7 +8,9 @@
 #define BUFFER_SIZE 256
 #define FIFO_REQ "req.fifo"
 #define FIFO_RESP "resp.fifo"
-
+// Noms des tubes (FIFOs)
+#define C_TO_R "fifo_client_to_router"
+#define R_TO_C "fifo_router_to_client"
 
 void run_client() {
     char input[BUFFER_SIZE];
