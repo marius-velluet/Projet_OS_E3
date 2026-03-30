@@ -1,3 +1,0 @@
-/home/user/Projet_OS_E3/build/CMakeFiles/mon_os.dir
-/home/user/Projet_OS_E3/build/CMakeFiles/edit_cache.dir
-/home/user/Projet_OS_E3/build/CMakeFiles/rebuild_cache.dir
