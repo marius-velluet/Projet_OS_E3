@@ -27,7 +27,7 @@ void run_client() {
         fprintf(stderr, "[Client] Message envoyé au routeur.\n");
 
         // 2. Attendre réponse
-        int fd_in = open(R_TO_C, O_RDONLY);
+        int fd_in = open(R_TO_C, O_RDWR);
         read(fd_in, response, BUFFER_SIZE);
         close(fd_in);
 

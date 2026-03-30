@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
+#include <pthread.h>
 #include "ID.h"
 #include "routage.h"
 #include "serveur.h"

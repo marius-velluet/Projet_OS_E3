@@ -21,7 +21,7 @@ void run_router() {
     fprintf(stderr, "[Routeur] Démarré.\n");
 
     // Étape A : Recevoir du client
-    int fd_c_in = open(C_TO_R, O_RDONLY);
+    int fd_c_in = open(C_TO_R, O_RDWR);
     read(fd_c_in, buffer, BUFFER_SIZE);
     close(fd_c_in);
     fprintf(stderr, "[Routeur] Routage du message : %s\n", buffer);
@@ -38,7 +38,7 @@ void run_router() {
     close(fd_s_out);
 
     // Étape C : Recevoir du serveur de données
-    int fd_s_in = open(S_TO_R, O_RDONLY);
+    int fd_s_in = open(S_TO_R, O_RDWR);
     read(fd_s_in, buffer, BUFFER_SIZE);
     close(fd_s_in);
 
