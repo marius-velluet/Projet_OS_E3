@@ -21,7 +21,7 @@
 void *reader_thread(void *arg) {
     char buffer[BUFFER_SIZE];
 
-    int fd_in = open(R_TO_S, O_RDWR);
+    int fd_in = open(R_TO_S, O_RDONLY);
     if (fd_in < 0) {
         perror("open R_TO_S");
         exit(1);
@@ -67,20 +67,22 @@ void *worker_thread(void *arg) {
     	// Conversion en entier
     	int id_menu = atoi(id_str2);
     
+    	snprintf(result, BUFFER_SIZE, "Menu introuvable");
     	//Fonction pour éviter la duplication de code
     	void bienvenue(char const* restaurant, char const * ville){
-    	printf("Bienvenue au restaurant %s à %s\n", restaurant, ville);
-    
+    		printf("Bienvenue au restaurant %s à %s\n", restaurant, ville);
     	}
     	//=========================================
     	if(id_ville == 0001){
     		if(id_menu == 1234){
     			system("feh images/menu1.jpeg &");
     			bienvenue("Burger Roi", "Noisy");
+    			snprintf(result, BUFFER_SIZE, "OK");
     		}
    	 	if(id_menu == 5678){
     			system("feh images/menu4.jpeg &");
     			bienvenue("Bahn mi", "Noisy");
+    			snprintf(result, BUFFER_SIZE, "OK");
     			}
     	}
     	else if(id_ville == 0002){
@@ -88,10 +90,12 @@ void *worker_thread(void *arg) {
     		//snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Tasty Crousty", 4, buffer + 4);
     		system("feh images/menu2.jpeg &");
     		bienvenue("Tasty Crousty", "Bussy");
+    		snprintf(result, BUFFER_SIZE, "OK");
     		}
     	if(id_menu == 5678){
     		system("feh images/menu5.jpeg &");
     		bienvenue("Restaurant volonté Thaï", "Bussy");
+    		snprintf(result, BUFFER_SIZE, "OK");
     		}
     
     	}
@@ -101,10 +105,12 @@ void *worker_thread(void *arg) {
     		//snprintf(result, BUFFER_SIZE, "Menu pour le lieu %.*s : Sandwich au poulet, Sandwich au thon, Sandwich au jambon, Sandwich végétarien", 4, buffer + 4);
     		system("feh images/menu3.jpeg &");
     		bienvenue("Shushii", "Créteil");
+    		snprintf(result, BUFFER_SIZE, "OK");
     		}
     		if(id_menu == 9123){
     		system("feh images/menu6.jpeg &");
     		bienvenue("Coré1", "Créteil");
+    		snprintf(result, BUFFER_SIZE, "OK");
     		}
     	}
     	else{ 

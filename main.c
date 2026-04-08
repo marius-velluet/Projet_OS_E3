@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <errno.h>
 #include <pthread.h>
+#include <sys/wait.h>
 #include "ID.h"
 #include "routage.h"
 #include "serveur.h"
@@ -43,6 +44,8 @@ int main() {
         } else {
             // Le parent devient le client pour faciliter l'interaction clavier
             run_client();
+            wait(NULL);
+            wait(NULL);
         }
     }
 
