@@ -19,6 +19,7 @@
 #define MAX_QUEUE 10
 
 void *reader_thread(void *arg) {
+(void) arg;
     char buffer[BUFFER_SIZE];
 
     int fd_in = open(R_TO_S, O_RDONLY);
@@ -39,7 +40,7 @@ void *reader_thread(void *arg) {
 }
 // --- LOGIQUE DU SERVEUR DE DONNÉES ---  
 void *worker_thread(void *arg) {
-
+(void)arg;
     char buffer[BUFFER_SIZE];
     char result[BUFFER_SIZE];
     
