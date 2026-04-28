@@ -1,3 +1,6 @@
+#ifndef SERVEUR_H
+#define SERVEUR_H
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -8,23 +11,25 @@
 #include <sys/socket.h>
 #include "threading.h"
 
-#define BUFFER_SIZE  256
-#define ROUTER_IP    "127.0.0.1"
-#define ROUTER_PORT_S  8081        // Correspond au PORT_SERVERS du routeur
-#define BACKLOG      5
+#define BUFFER_SIZE   256
+#define ROUTER_IP     "127.0.0.1"
+#define ROUTER_PORT_S 9091   /* Correspond au PORT_SERVERS du routeur */
 
-// fd de la socket connectée au routeur, partagé entre les deux threads
+/* fd de la socket connectée au routeur, partagé entre les deux threads */
 static int fd_router = -1;
 
-// -------------------------------------------------------
-// Thread lecteur : reçoit les requêtes du routeur
-// -------------------------------------------------------
-void *reader_thread(void *arg) {
+/* Fonction utilitaire — définie hors de tout thread */
+static void bienvenue(char const *restaurant, char const *ville) {
+    printf("Bienvenue au restaurant %s à %s\n", restaurant, ville);
+}
+
+/* Thread lecteur : reçoit les requêtes du routeur */
+static void *reader_thread(void *arg) {
     (void)arg;
     char buffer[BUFFER_SIZE];
 
     while (1) {
-        int n = read(fd_router, buffer, BUFFER_SIZE);
+        int n = read(fd_router, buffer, BUFFER_SIZE - 1);
         if (n <= 0) {
             fprintf(stderr, "[Reader] Connexion perdue avec le routeur.\n");
             break;
@@ -36,10 +41,8 @@ void *reader_thread(void *arg) {
     return NULL;
 }
 
-// -------------------------------------------------------
-// Thread worker : traite les requêtes et répond au routeur
-// -------------------------------------------------------
-void *worker_thread(void *arg) {
+/* Thread worker : traite les requêtes et répond au routeur */
+static void *worker_thread(void *arg) {
     (void)arg;
     char buffer[BUFFER_SIZE];
     char result[BUFFER_SIZE];
@@ -48,7 +51,7 @@ void *worker_thread(void *arg) {
         dequeue(buffer);
         fprintf(stderr, "[Worker] Traitement : %s\n", buffer);
 
-        // Parsing des identifiants 
+        /* Parsing des identifiants */
         char id_str1[5];
         strncpy(id_str1, buffer + 4, 4);
         id_str1[4] = '\0';
@@ -61,17 +64,12 @@ void *worker_thread(void *arg) {
 
         snprintf(result, BUFFER_SIZE, "Menu introuvable");
 
-        void bienvenue(char const *restaurant, char const *ville) {
-            printf("Bienvenue au restaurant %s à %s\n", restaurant, ville);
-        }
-
         if (id_ville == 1) {
             if (id_menu == 1234) {
                 system("feh images/menu1.jpeg &");
                 bienvenue("Burger Roi", "Noisy");
                 snprintf(result, BUFFER_SIZE, "OK");
-            }
-            if (id_menu == 5678) {
+            } else if (id_menu == 5678) {
                 system("feh images/menu4.jpeg &");
                 bienvenue("Bahn mi", "Noisy");
                 snprintf(result, BUFFER_SIZE, "OK");
@@ -81,8 +79,7 @@ void *worker_thread(void *arg) {
                 system("feh images/menu2.jpeg &");
                 bienvenue("Tasty Crousty", "Bussy");
                 snprintf(result, BUFFER_SIZE, "OK");
-            }
-            if (id_menu == 5678) {
+            } else if (id_menu == 5678) {
                 system("feh images/menu5.jpeg &");
                 bienvenue("Restaurant volonté Thaï", "Bussy");
                 snprintf(result, BUFFER_SIZE, "OK");
@@ -92,8 +89,7 @@ void *worker_thread(void *arg) {
                 system("feh images/menu3.jpeg &");
                 bienvenue("Shushii", "Créteil");
                 snprintf(result, BUFFER_SIZE, "OK");
-            }
-            if (id_menu == 9123) {
+            } else if (id_menu == 9123) {
                 system("feh images/menu6.jpeg &");
                 bienvenue("Coré1", "Créteil");
                 snprintf(result, BUFFER_SIZE, "OK");
@@ -102,18 +98,14 @@ void *worker_thread(void *arg) {
             snprintf(result, BUFFER_SIZE, "Menu introuvable pour le lieu %.*s", 4, buffer + 4);
         }
 
-        // Réponse au routeur — même fd, plus de boucle d'open()
+        /* Réponse au routeur */
         write(fd_router, result, strlen(result) + 1);
     }
     return NULL;
 }
 
-// -------------------------------------------------------
-// Point d'entrée du serveur de données
-// -------------------------------------------------------
+/* Point d'entrée du serveur de données */
 void run_server() {
-
-    // SETUP : connexion au routeur (le serveur est client du routeur ici)
     fd_router = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (fd_router == -1) {
         fprintf(stderr, "[Serveur] Erreur création socket.\n");
@@ -132,7 +124,6 @@ void run_server() {
     }
     fprintf(stderr, "[Serveur] Connecté au routeur.\n");
 
-    // Lancement des threads
     pthread_t t1, t2;
     pthread_create(&t1, NULL, reader_thread, NULL);
     pthread_create(&t2, NULL, worker_thread, NULL);
@@ -141,3 +132,5 @@ void run_server() {
 
     close(fd_router);
 }
+
+#endif /* SERVEUR_H */
