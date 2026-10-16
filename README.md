@@ -135,6 +135,6 @@ Le projet est compilé avec `-Wall -Wextra -Werror`.
 ## Auteurs
 
 - Marius Velluet
-- *(nom de ton binôme)*
+- Adrian Mussat
 
-Projet réalisé à l'ESIEE Paris, filière cybersécurité.
+Projet réalisé à l'ESIEE Paris.
